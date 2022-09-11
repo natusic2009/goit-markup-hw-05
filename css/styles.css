@@ -9,6 +9,7 @@
   --horisontal-line: #ececec;
   --background-footer: #2f303a;
   --main-text-icon: #afb1b8;
+  --timing-func: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 body {
@@ -100,7 +101,9 @@ a {
   padding-left: 0;
   margin: 0;
   margin-left: 93px;
+  position: relative;
 }
+
 .list-features {
   display: flex;
   gap: 30px;
@@ -153,6 +156,26 @@ a {
   font-size: 14px;
   line-height: 16px;
   letter-spacing: 0.02em;
+  position: relative;
+}
+
+.nav-link::after,
+.nav-link-current::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  display: block;
+  width: 100%;
+  height: 4px;
+  background-color: var(--accent-color);
+  border-radius: 2px;
+  opacity: 0;
+  transition: opacity 250ms var(--timing-func);
+}
+.nav-link:hover::after,
+.nav-link-current:hover::after {
+  opacity: 1;
 }
 .contant-nav {
   display: flex;
@@ -303,6 +326,7 @@ a {
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.14),
     0px 2px 1px rgba(0, 0, 0, 0.2);
   border-radius: 0px 0px 4px 4px;
+  position: relative;
 }
 .img-item:last-child {
   margin-right: 0px;
@@ -318,6 +342,22 @@ a {
   padding-left: 0px;
   padding-right: 0px;
   gap: 30px;
+}
+.img-item-text {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 70px;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--main-background-color);
+  background-color: rgba(47, 48, 58, 0.8);
 }
 .team-card {
   background: #ffffff;
@@ -553,22 +593,56 @@ button {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  margin-left: auto;
-  margin-right: auto;
   margin: 0;
   padding: 0;
   gap: 30px;
 }
+
 .portfolio-card {
   display: block;
-  background: #ffffff;
-  border-radius: 0px 0px 4px 4px;
+  transition: box-shadow 250ms var(--timing-func);
 }
-.portfolio-card:focus,
-.portfolio-card:hover {
+
+.portfolio-card:hover,
+.portfolio-card:focus {
+  color: var(--accent-color);
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.12), 0px 4px 4px rgba(0, 0, 0, 0.06),
+    1px 4px 6px rgba(0, 0, 0, 0.16);
+}
+.portfolio-card-thumb {
+  position: relative;
+  overflow: hidden;
+}
+.portfolio-card-thumb img {
+  max-width: 100%;
+  height: auto;
+}
+.portfolio-card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translateY(100%);
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: rgba(33, 150, 243, 0.9);
+  transition: transform 250ms var(--timing-func);
+}
+.portfolio-card-thumb:hover,
+.portfolio-card-overlay {
+  transform: translateY(0);
+}
+.portfolio-card-overlay-text {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: calc(28 / 18);
+  letter-spacing: 0.03em;
   color: var(--main-background-color);
-  border-radius: 0px 0px 4px 4px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  width: 322px;
 }
 .main-section {
   padding: 94px 0;
@@ -604,4 +678,65 @@ button {
   color: var(--main-text-icon);
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 50%;
+}
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  opacity: 1;
+  transform: translateY(0%);
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  visibility: visible;
+  transition: opacity 500ms linear, visibility 500ms linear, transform 500ms linear;
+}
+
+.backdrop.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transform: translateY(-100%);
+}
+
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 528px;
+  height: 581px;
+  background-color: var(--main-background-color);
+  border-radius: 4px;
+}
+
+.modal-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border-color: rgba(0, 0, 0, 0.1);
+
+  cursor: pointer;
+
+  transition: color 250ms var(--timing-func),
+    background-color 250ms var(--timing-func);
+}
+
+.modal-icon {
+  fill: currentColor;
+}
+
+.modal-btn:hover,
+.modal-btn:focus {
+  color: var(--main-background-color);
+  background-color: var(--accent-color);
 }
