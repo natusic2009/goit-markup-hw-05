@@ -613,6 +613,11 @@ button {
   position: relative;
   overflow: hidden;
 }
+.img-portfolio-block:focus,
+.img-portfolio-block:hover .portfolio-card-overlay {
+  transform: translateY(0);
+}
+
 .portfolio-card-thumb img {
   max-width: 100%;
   height: auto;
@@ -632,10 +637,7 @@ button {
   background-color: rgba(33, 150, 243, 0.9);
   transition: transform 250ms var(--timing-func);
 }
-.portfolio-card-thumb:hover,
-.portfolio-card-overlay {
-  transform: translateY(0);
-}
+
 .portfolio-card-overlay-text {
   font-weight: 400;
   font-size: 18px;
@@ -727,8 +729,7 @@ button {
 
   cursor: pointer;
 
-  transition: color 250ms var(--timing-func),
-    background-color 250ms var(--timing-func);
+  transition: color 250ms var(--timing-func), background-color 250ms var(--timing-func);
 }
 
 .modal-icon {
